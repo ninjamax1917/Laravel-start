@@ -72,9 +72,14 @@
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center space-x-3">
                                                 <a class="text-indigo-600 hover:text-indigo-900"
-                                                    href="#">Редактировать</a>
+                                                    href="{{ route('articles.edit', $article) }}">Редактировать</a>
 
-                                                <a class="text-red-600 hover:text-red-900 cursor-pointer">Удалить</a>
+                                                <form action="{{ route('articles.destroy', $article) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900 cursor-pointer">Удалить</button>
+                                                </form>
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

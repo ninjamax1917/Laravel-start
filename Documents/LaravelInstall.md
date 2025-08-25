@@ -1,5 +1,5 @@
 sudo apt update
-sudo apt install php8.3-xml
+sudo apt install php8.3-xml~
 
 composer install
 

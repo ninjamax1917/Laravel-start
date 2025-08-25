@@ -13,6 +13,9 @@
 </head>
 
 <body class="antialiased bg-gray-100">
+    @if(session('message'))
+    <div class="bg-green-600 font-bold text-white p-5 text-center">{{ session('message') }}</div>
+    @endif
     @yield('content')
 </body>
 

@@ -11,8 +11,13 @@
     Вернуться назад
 </a>
 
-<form action="{{ route('articles.store') }}" method="POST">
+<form action="{{ $article->exists ? route('articles.update', $article) : route('articles.store') }}" 
+method="POST">
     @csrf
+    @if ($article->exists)
+        @method('PUT')
+    @endif
+
     <div class="shadow overflow-hidden sm:rounded-md">
         <div class="px-4 py-5 bg-white sm:p-6">
             <div class="grid grid-cols-6 gap-6">
@@ -21,8 +26,9 @@
                     <label class="block text-sm font-medium text-gray-700">Заголовок</label>
                     <input type="text"
                     name="title"
+                    value="{{ old('title', $article) }}"
                     class="border h-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('title') border-red-500 @enderror rounded-md">
-                    @error('title')
+                                        @error('title')
                         <div class="text-red-500 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
@@ -30,7 +36,10 @@
                 <div class="col-span-6">
                     <select name="user_id"
                     class="border h-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('user_id') border-red-500 @enderror rounded-md">
-                        <option value="1">Автор 1</option>
+                    @foreach($users as $id => $name)
+                        <option value="{{ $id }}" @selected((int) old('user_id', $article) === $id)>{{ $name }}</option>
+                    @endforeach
+                        
                     </select>
                     @error('user_id')
                         <div class="text-red-500 mt-2">{{ $message }}</div>
@@ -41,6 +50,7 @@
                     <label class="block text-sm font-medium text-gray-700">Текст</label>
                     <input type="text"
                     name="text"
+                    value="{{ old('text', $article) }}"
                     class="border h-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('text') border-red-500 @enderror rounded-md">
                     @error('text')
                         <div class="text-red-500 mt-2">{{ $message }}</div>
